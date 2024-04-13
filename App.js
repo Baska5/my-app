@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'; //must be first import
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { Platform, SafeAreaView, StatusBar } from 'react-native';
+import axios from 'axios';
+import Home from './screens/Home'
+import Profile from './screens/Profile';
 
-export default function App() {
+//initial phase 
+axios.defaults.baseURL = 'https://dummyjson.com/'
+
+
+//functional phase
+const App = () => {
+
+  const Drawer = createDrawerNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <SafeAreaView style={{flex:1, marginTop:Platform.OS=='android'?StatusBar.currentHeight:0}}>
+      <NavigationContainer>
+        <Drawer.Navigator>
+          <Drawer.Screen name='Home' component={Home} options={{headerShown:false}}/>
+          <Drawer.Screen name='Profile' component={Profile}/>
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
+    
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
+
+
+/*
+  npm i axios
+  axios: asyncronous http request handler.
+*/
